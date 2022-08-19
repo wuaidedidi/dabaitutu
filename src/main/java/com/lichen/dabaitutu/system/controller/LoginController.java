@@ -1,8 +1,14 @@
 package com.lichen.dabaitutu.system.controller;
 
+import com.lichen.dabaitutu.common.entity.DabaituResponse;
+import com.lichen.dabaitutu.common.service.CodeValidateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author lichen
@@ -15,7 +21,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class LoginController {
-        public void login(){
 
+    private final CodeValidateService codeValidateService;
+
+        @PostMapping("/login")
+        public DabaituResponse login(
+                @NotBlank(message = "{required}") String username,
+                @NotBlank(message = "{required}") String password,
+                @NotBlank(message = "{required}") String verifyCode,
+                boolean remeberMe,
+                HttpServletRequest request){
+            codeValidateService.check(request.getSession().getId(),verifyCode);
+            return new DabaituResponse().success().data("大白兔");
         }
 }
