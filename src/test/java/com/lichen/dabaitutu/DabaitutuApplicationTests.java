@@ -1,0 +1,13 @@
+package com.lichen.dabaitutu;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class DabaitutuApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
