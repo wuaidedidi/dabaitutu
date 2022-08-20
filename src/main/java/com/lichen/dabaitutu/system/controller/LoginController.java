@@ -35,10 +35,12 @@ public class LoginController extends BaseController {
                 @NotBlank(message = "{required}") String verifyCode,
                 boolean remeberMe,
                 HttpServletRequest request){
-            //校验验证码
-            codeValidateService.check(request.getSession().getId(),verifyCode);
+            // //校验验证码
+            // codeValidateService.check(request.getSession().getId(),verifyCode);
+            //密码加密
             UsernamePasswordToken token=new UsernamePasswordToken(username,
                     MD5Util.encrypt(username.toLowerCase(),password),remeberMe);
+            //shiro登陆保存
             super.login(token);
             //保存登陆日志暂时不写
             return new DabaituResponse().success().data(properties.getShiro().getSuccessUrl());

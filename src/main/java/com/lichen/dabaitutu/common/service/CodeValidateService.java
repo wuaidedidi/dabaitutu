@@ -62,7 +62,7 @@ public class CodeValidateService {
             Object codeInSession = session.getAttribute(codeKey);
             LocalDateTime timeInSession = (LocalDateTime) session.getAttribute(validateCodeTimeSessionKey);
             try {
-                if (LocalDateTime.now().isAfter(timeInSession)) {
+                if (null==timeInSession || LocalDateTime.now().isAfter(timeInSession)) {
                     throw new DabaituException("验证码已过期");
                 }
                 if (StringUtils.equalsIgnoreCase(value, String.valueOf(codeInSession))) {

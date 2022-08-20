@@ -3,5 +3,7 @@ server:
   servlet:
     context-path:/
 spring:
+  thymeleaf:
+    cache: false
   config:
     import: classpath:dabaitu.yml
