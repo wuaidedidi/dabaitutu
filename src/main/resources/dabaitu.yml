@@ -1,5 +1,4 @@
-
 #com.lichen.dabaitutu.common.properties.DabaituProperties
 dabaitu:
- enable-redis-cache: false
+  enable-redis-cache: false
 

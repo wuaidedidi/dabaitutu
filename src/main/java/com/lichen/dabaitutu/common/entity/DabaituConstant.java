@@ -17,4 +17,9 @@ public interface DabaituConstant {
      * 验证码前缀
      */
     String VALIDATA_CODE_PREFIX="febs_captcha_";
+
+    /**
+     * 验证码存活时间前缀
+     */
+    String VALIDATE_CODE_TIME_PREFIX="febs_captcha_time_";
 }

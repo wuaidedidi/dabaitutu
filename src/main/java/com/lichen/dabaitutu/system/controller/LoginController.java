@@ -1,8 +1,12 @@
 package com.lichen.dabaitutu.system.controller;
 
+import com.lichen.dabaitutu.common.controller.BaseController;
 import com.lichen.dabaitutu.common.entity.DabaituResponse;
+import com.lichen.dabaitutu.common.properties.DabaituProperties;
 import com.lichen.dabaitutu.common.service.CodeValidateService;
+import com.lichen.dabaitutu.common.utils.MD5Util;
 import lombok.RequiredArgsConstructor;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,10 +24,10 @@ import javax.validation.constraints.NotBlank;
 @Validated
 @RestController
 @RequiredArgsConstructor
-public class LoginController {
+public class LoginController extends BaseController {
 
     private final CodeValidateService codeValidateService;
-
+    private final DabaituProperties properties;
         @PostMapping("/login")
         public DabaituResponse login(
                 @NotBlank(message = "{required}") String username,
@@ -31,7 +35,13 @@ public class LoginController {
                 @NotBlank(message = "{required}") String verifyCode,
                 boolean remeberMe,
                 HttpServletRequest request){
+            //校验验证码
             codeValidateService.check(request.getSession().getId(),verifyCode);
-            return new DabaituResponse().success().data("大白兔");
+            UsernamePasswordToken token=new UsernamePasswordToken(username,
+                    MD5Util.encrypt(username.toLowerCase(),password),remeberMe);
+            super.login(token);
+            //保存登陆日志暂时不写
+            return new DabaituResponse().success().data(properties.getShiro().getSuccessUrl());
         }
 }
+
